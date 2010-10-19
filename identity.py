@@ -70,22 +70,3 @@ class Identity(JSONBase):
         if hasattr(self, "properties"):
             d["properties"] = self.properties.to_json_array()
         return d
-
-
-class Property(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = Property()
-        if "name" in o:
-            inst.name = o["name"]
-        if "value" in o:
-            inst.value = o["value"]
-        return inst
-
-    def to_json_dict(self):
-        d = {}
-        if hasattr(self, "name"):
-            d["name"] = self.name
-        if hasattr(self, "value"):
-            d["value"] = self.value
-        return d
