@@ -31,16 +31,13 @@ class FSDict(dict):
         {"key1": "value1", "key2": "value2"}
     
     """
-    
+
     def __init__(self, pairs=None):
         if isinstance(pairs, list) and all((isinstance(pair, dict) for pair in pairs)):
             dict.__init__(self)
             for pair in pairs:
                 self[pair["name"]] = pair["value"]
 
-    def put(self, prop):
-        self[prop["name"]] = prop["value"]
-    
     def to_json_array(self):
         return [{"name": key, "value": self[key]} for key in self]
 
