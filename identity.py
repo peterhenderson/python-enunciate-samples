@@ -32,6 +32,12 @@ class FSDict(dict):
     
     """
     
+    def __init__(self, pairs=None):
+        if isinstance(pairs, list) and all((isinstance(pair, dict) for pair in pairs)):
+            dict.__init__(self)
+            for pair in pairs:
+                self[pair["name"]] = pair["value"]
+
     def put(self, prop):
         self[prop["name"]] = prop["value"]
     
@@ -50,9 +56,7 @@ class Identity(JSONBase):
         if "version" in o:
             inst.version = o["version"]
         if "properties" in o:
-            inst.properties = FSDict()
-            for item in o["properties"]:
-                inst.properties.put(item)
+            inst.properties = FSDict(o["properties"])
         return inst
 
     def to_json_dict(self):
