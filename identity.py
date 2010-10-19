@@ -10,7 +10,7 @@ def parse(input):
         data = json.load(input)
     else:
         data = json.loads(input)
-    return Identity.from_json(data)
+    return Identity(data)
 
 
 class JSONBase:
@@ -46,18 +46,15 @@ class FSDict(dict):
 
 
 class Identity(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = Identity()
+    def __init__(self, o):
         if "statusCode" in o:
-            inst.statusCode = o["statusCode"]
+            self.statusCode = o["statusCode"]
         if "statusMessage" in o:
-            inst.statusMessage = o["statusMessage"]
+            self.statusMessage = o["statusMessage"]
         if "version" in o:
-            inst.version = o["version"]
+            self.version = o["version"]
         if "properties" in o:
-            inst.properties = FSDict(o["properties"])
-        return inst
+            self.properties = FSDict(o["properties"])
 
     def to_json_dict(self):
         d = {}

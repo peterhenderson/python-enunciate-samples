@@ -10,7 +10,7 @@ def parse(input):
         data = json.load(input)
     else:
         data = json.loads(input)
-    return FamilyTree.from_json(data)
+    return FamilyTree(data)
 
 
 class JSONBase:
@@ -23,20 +23,17 @@ class JSONBase:
 
 
 class FamilyTree(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = FamilyTree()
+    def __init__(self, o):
         if "statusCode" in o:
-            inst.statusCode = o["statusCode"]
+            self.statusCode = o["statusCode"]
         if "statusMessage" in o:
-            inst.statusMessage = o["statusMessage"]
+            self.statusMessage = o["statusMessage"]
         if "version" in o:
-            inst.version = o["version"]
+            self.version = o["version"]
         if "pedigrees" in o:
-            inst.pedigrees = []
+            self.pedigrees = []
             for item in o["pedigrees"]:
-                inst.pedigrees.append(Pedigree.from_json(item))
-        return inst
+                self.pedigrees.append(Pedigree(item))
 
     def to_json_dict(self):
         d = {}
@@ -55,18 +52,15 @@ class FamilyTree(JSONBase):
 
 
 class Pedigree(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = Pedigree()
+    def __init__(self, o):
         if "id" in o:
-            inst.id = o["id"]
+            self.id = o["id"]
         if "requestedId" in o:
-            inst.requestedId = o["requestedId"]
+            self.requestedId = o["requestedId"]
         if "persons" in o:
-            inst.persons = []
+            self.persons = []
             for item in o["persons"]:
-                inst.persons.append(Person.from_json(item))
-        return inst
+                self.persons.append(Person(item))
 
     def to_json_dict(self):
         d = {}
@@ -83,18 +77,15 @@ class Pedigree(JSONBase):
 
 
 class Person(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = Person()
+    def __init__(self, o):
         if "id" in o:
-            inst.id = o["id"]
+            self.id = o["id"]
         if "assertions" in o:
-            inst.assertions = PersonAssertions.from_json(o["assertions"])
+            self.assertions = PersonAssertions(o["assertions"])
         if "parents" in o:
-            inst.parents = []
+            self.parents = []
             for item in o["parents"]:
-                inst.parents.append(ParentsReference.from_json(item))
-        return inst
+                self.parents.append(ParentsReference(item))
 
     def to_json_dict(self):
         d = {}
@@ -111,18 +102,15 @@ class Person(JSONBase):
 
 
 class PersonAssertions(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = PersonAssertions()
+    def __init__(self, o):
         if "names" in o:
-            inst.names = []
+            self.names = []
             for item in o["names"]:
-                inst.names.append(NameAssertion.from_json(item))
+                self.names.append(NameAssertion(item))
         if "genders" in o:
-            inst.genders = []
+            self.genders = []
             for item in o["genders"]:
-                inst.genders.append(GenderAssertion.from_json(item))
-        return inst
+                self.genders.append(GenderAssertion(item))
 
     def to_json_dict(self):
         d = {}
@@ -140,12 +128,9 @@ class PersonAssertions(JSONBase):
 
 
 class NameAssertion(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = NameAssertion()
+    def __init__(self, o):
         if "value" in o:
-            inst.value = NameValue.from_json(o["value"])
-        return inst
+            self.value = NameValue(o["value"])
 
     def to_json_dict(self):
         d = {}
@@ -155,14 +140,11 @@ class NameAssertion(JSONBase):
 
 
 class NameValue(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = NameValue()
+    def __init__(self, o):
         if "forms" in o:
-            inst.forms = []
+            self.forms = []
             for item in o["forms"]:
-                inst.forms.append(NameForm.from_json(item))
-        return inst
+                self.forms.append(NameForm(item))
 
     def to_json_dict(self):
         d = {}
@@ -175,12 +157,9 @@ class NameValue(JSONBase):
 
 
 class NameForm(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = NameForm()
+    def __init__(self, o):
         if "fullText" in o:
-            inst.fullText = o["fullText"]
-        return inst
+            self.fullText = o["fullText"]
 
     def to_json_dict(self):
         d = {}
@@ -190,12 +169,9 @@ class NameForm(JSONBase):
 
 
 class GenderAssertion(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = GenderAssertion()
+    def __init__(self, o):
         if "value" in o:
-            inst.value = GenderValue.from_json(o["value"])
-        return inst
+            self.value = GenderValue(o["value"])
 
     def to_json_dict(self):
         d = {}
@@ -205,12 +181,9 @@ class GenderAssertion(JSONBase):
 
 
 class GenderValue(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = GenderValue()
+    def __init__(self, o):
         if "type" in o:
-            inst.type = o["type"]
-        return inst
+            self.type = o["type"]
 
     def to_json_dict(self):
         d = {}
@@ -220,14 +193,11 @@ class GenderValue(JSONBase):
 
 
 class ParentsReference(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = ParentsReference()
+    def __init__(self, o):
         if "parent" in o:
-            inst.parents = []
+            self.parents = []
             for item in o["parent"]:
-                inst.parents.append(PersonReference.from_json(item))
-        return inst
+                self.parents.append(PersonReference(item))
 
     def to_json_dict(self):
         d = {}
@@ -241,14 +211,11 @@ class ParentsReference(JSONBase):
 
 
 class PersonReference(JSONBase):
-    @staticmethod
-    def from_json(o):
-        inst = PersonReference()
+    def __init__(self, o):
         if "id" in o:
-            inst.id = o["id"]
+            self.id = o["id"]
         if "gender" in o:
-            inst.gender = o["gender"]
-        return inst
+            self.gender = o["gender"]
 
     def to_json_dict(self):
         d = {}
